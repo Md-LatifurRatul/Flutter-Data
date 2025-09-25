@@ -10,31 +10,71 @@ class AlbumHomePage extends StatefulWidget {
 }
 
 class _AlbumHomePageState extends State<AlbumHomePage> {
-  late Future<Album> futureAlbum;
+  Future<Album>? futureAlbum;
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    futureAlbum = NetworkRequest.fetchAlbum();
+    // futureAlbum = NetworkRequest.fetchAlbum();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Fetch Data Example")),
-      body: Center(
-        child: FutureBuilder(
-          future: futureAlbum,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Text(snapshot.data!.title);
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-            return const CircularProgressIndicator();
-          },
-        ),
+      body: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(8),
+        child: (futureAlbum == null) ? buildColumn() : buildFutureBuilder(),
       ),
+      // Center(
+      //   child: FutureBuilder(
+      //     future: futureAlbum,
+      //     builder: (context, snapshot) {
+      //       if (snapshot.hasData) {
+      //         return Text(snapshot.data!.title);
+      //       } else if (snapshot.hasError) {
+      //         return Text('${snapshot.error}');
+      //       }
+      //       return const CircularProgressIndicator();
+      //     },
+      //   ),
+      // ),
+    );
+  }
+
+  Column buildColumn() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextField(
+          controller: _controller,
+          decoration: const InputDecoration(hintText: "Enter title"),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              futureAlbum = NetworkRequest.createAlbum(_controller.text);
+            });
+          },
+          child: const Text('Create Data'),
+        ),
+      ],
+    );
+  }
+
+  FutureBuilder<Album> buildFutureBuilder() {
+    return FutureBuilder<Album>(
+      future: futureAlbum,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(snapshot.data!.title);
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+        return const CircularProgressIndicator();
+      },
     );
   }
 }
