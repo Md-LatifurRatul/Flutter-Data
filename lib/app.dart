@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_data/pages/album_home_page.dart';
+import 'package:flutter_data/pages/web_socket_page.dart';
 
 class FlutterData extends StatelessWidget {
   const FlutterData({super.key});
@@ -11,7 +11,8 @@ class FlutterData extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const AlbumHomePage(),
+      // home: const AlbumHomePage(),
+      home: WebSocketPage(),
     );
   }
 }
