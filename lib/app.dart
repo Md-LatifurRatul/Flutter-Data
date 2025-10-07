@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_data/pages/web_socket_page.dart';
+import 'package:flutter_data/pages/photo_album.dart';
 
 class FlutterData extends StatelessWidget {
   const FlutterData({super.key});
@@ -12,7 +12,8 @@ class FlutterData extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       // home: const AlbumHomePage(),
-      home: WebSocketPage(),
+      // home: WebSocketPage(),
+      home: PhotoAlbumGallery(),
     );
   }
 }
